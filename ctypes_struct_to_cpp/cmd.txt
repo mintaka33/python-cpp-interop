@@ -1,6 +1,0 @@
-
-g++ -shared -O0 -g mylib.cpp -o mylib.so
-
-# print c/c++ struct layout (note: need to compile *.so with debug options)
-sudo apt install dwarves
-pahole ./mylib.so

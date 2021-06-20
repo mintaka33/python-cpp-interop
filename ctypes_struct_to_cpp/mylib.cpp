@@ -10,11 +10,7 @@ typedef struct _MyData
     int16_t c;
 } MyData;
 
-void print_struct()
-{
-    MyData data = {};
-    printf("a = %d, b = %d, c = %d\n", data.a, data.b, data.c);
-}
+MyData g_data = {};
 
 int* get_array()
 {
@@ -29,6 +25,16 @@ int* get_array()
 void print_array(int* buf, int length)
 {
     printf("print_array: buf = %x, length = %d\n", buf, length);
+    for (size_t i = 0; i < length; i++)
+    {
+        printf("%d, ", buf[i]);
+    }
+    printf("\n");
+}
+
+void print_struct(char* buf, int length)
+{
+    printf("print_struct: buf = %x, length = %d\n", buf, length);
     for (size_t i = 0; i < length; i++)
     {
         printf("%d, ", buf[i]);
