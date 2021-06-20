@@ -5,12 +5,13 @@ extern "C" {
 
 typedef struct _MyData
 {
-    int32_t a;
-    int8_t  b;
-    int16_t c;
+    int32_t a : 5;
+    int32_t b : 11;
+    int32_t c : 16;
+    int8_t  d;
+    int16_t e;
+    int16_t f;
 } MyData;
-
-MyData g_data = {};
 
 int* get_array()
 {
@@ -40,6 +41,9 @@ void print_struct(char* buf, int length)
         printf("%d, ", buf[i]);
     }
     printf("\n");
+
+    MyData* data = (MyData*)buf;
+    printf("MyData: a = %d, b = %d, c = %d, d = %d, e = %d, f = %d\n", data->a, data->b, data->c, data->d, data->e, data->f);
 }
 
 }

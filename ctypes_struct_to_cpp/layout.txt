@@ -43,14 +43,19 @@ struct _IO_FILE {
 	/* last cacheline: 24 bytes */
 };
 struct _MyData {
-	int32_t                    a;                    /*     0     4 */
-	int8_t                     b;                    /*     4     1 */
+	int32_t                    a:5;                  /*     0: 0  4 */
+	int32_t                    b:11;                 /*     0: 5  4 */
+	int32_t                    c:16;                 /*     0:16  4 */
+	int8_t                     d;                    /*     4     1 */
 
 	/* XXX 1 byte hole, try to pack */
 
-	int16_t                    c;                    /*     6     2 */
+	int16_t                    e;                    /*     6     2 */
+	int16_t                    f;                    /*     8     2 */
 
-	/* size: 8, cachelines: 1, members: 3 */
-	/* sum members: 7, holes: 1, sum holes: 1 */
-	/* last cacheline: 8 bytes */
+	/* size: 12, cachelines: 1, members: 6 */
+	/* sum members: 5, holes: 1, sum holes: 1 */
+	/* sum bitfield members: 32 bits (4 bytes) */
+	/* padding: 2 */
+	/* last cacheline: 12 bytes */
 };
