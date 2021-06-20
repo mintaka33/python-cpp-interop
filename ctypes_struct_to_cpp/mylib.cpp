@@ -24,7 +24,7 @@ int* get_array()
 
 void print_array(int* buf, int length)
 {
-    printf("print_array: buf = %x, length = %d\n", buf, length);
+    printf("print_array: buf = %llx, length = %d\n", buf, length);
     for (size_t i = 0; i < length; i++)
     {
         printf("%d, ", buf[i]);
@@ -34,7 +34,7 @@ void print_array(int* buf, int length)
 
 void print_struct(char* buf, int length)
 {
-    printf("print_struct: buf = %x, length = %d\n", buf, length);
+    printf("#### print_struct: buf = 0x%llx, length = %d\n", buf, length);
     for (size_t i = 0; i < length; i++)
     {
         printf("%d, ", buf[i]);

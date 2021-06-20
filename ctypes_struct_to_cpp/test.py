@@ -4,10 +4,10 @@ from numpy.ctypeslib import ndpointer
 
 class MyData(Structure):
     _fields_ = [
-        ("a", c_int8),
-        ("b", c_int8),
-        ("c", c_int8),
-        ("d", c_int8),
+        ("a", c_int32, 8),
+        ("b", c_int32, 8),
+        ("c", c_int32, 8),
+        ("d", c_int32, 8),
     ]
 
 print('MyData size = ', sizeof(MyData))
@@ -37,9 +37,15 @@ f_print_struct = CDLL('./mylib.so').print_struct
 my_data = MyData()
 my_data.a, my_data.b, my_data.c, my_data.d = 1, 2, 3, 4
 ptr_data = cast(pointer(my_data), POINTER(c_int8))
+print('#### ptr_data address = ', hex(cast(ptr_data, c_void_p).value))
 np_data = np.ctypeslib.as_array(ptr_data, shape=(sizeof(MyData),))
-print(np_data)
+print('#### np_data pointer  = ', hex(np_data.__array_interface__['data'][0]), np_data)
 f_print_struct.argtypes = [ndpointer(dtype=c_int8, shape=(np_data.size,))]
 f_print_struct(np_data, np_data.size)
+
+# all three pointers have same memory address
+#### ptr_data address =  0x7ff238463a90
+#### np_data pointer  =  0x7ff238463a90 [1 2 3 4]
+#### print_struct: buf = 0x7ff238463a90, length = 4
 
 print('done')
