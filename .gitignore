@@ -1,4 +1,5 @@
 *.so
 .vscode
+build
 .rendered.*
 
