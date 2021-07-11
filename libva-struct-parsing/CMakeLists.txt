@@ -13,5 +13,5 @@ endif()
 
 include_directories (pymylib $ENV{PYTHON_INCLUDE} $ENV{PYBIND11_INCLUDE})
 add_library(pymylib SHARED mylib.cpp)
-target_link_libraries(pymylib va va-drm)
+target_link_libraries(pymylib)
 set_target_properties(pymylib PROPERTIES PREFIX "")
