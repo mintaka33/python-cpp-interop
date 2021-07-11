@@ -27,7 +27,6 @@ ptr_data = cast(pointer(my_data), POINTER(c_int8))
 print('#### ptr_data address = ', hex(cast(ptr_data, c_void_p).value))
 np_data = np.ctypeslib.as_array(ptr_data, shape=(sizeof(MyData),))
 print('#### np_data pointer  = ', hex(np_data.__array_interface__['data'][0]), np_data)
-
 mylib.print_struct(np_data)
 
 print('done')
