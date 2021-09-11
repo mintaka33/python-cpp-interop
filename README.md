@@ -21,6 +21,7 @@ sudo apt install libdw-dev
 
 git clone https://git.kernel.org/pub/scm/devel/pahole/pahole.git
 git checkout v1.22
+
 cd pahole
 mkdir build
 cd build
