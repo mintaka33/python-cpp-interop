@@ -5,6 +5,30 @@ def check_valid(line):
     else:
         return True
 
+def get_type_name(line):
+    var_type, var_name =  None, None
+    if 'unsigned int' in line:
+        var_type = 'c_uint32'
+        var_name = line.split('unsigned int ')[1].split(';')[0]
+    elif 'uint32_t' in line:
+        var_type = 'c_uint32'
+        var_name = line.split('uint32_t ')[1].split(';')[0]
+    elif 'uint8_t' in line:
+        var_type = 'c_uint8'
+        var_name = line.split('uint8_t ')[1].split(';')[0]
+    elif 'int32_t' in line:
+        var_type = 'c_int32'
+        var_name = line.split('int32_t ')[1].split(';')[0]
+    elif 'size_t' in line:
+        var_type = 'c_uint64'
+        var_name = line.split('size_t ')[1].split(';')[0]
+    elif 'int' in line:
+        var_type = 'c_int32'
+        var_name = line.split('int ')[1].split(';')[0]
+    else:
+        pass
+    return var_type, var_name
+
 struct_name = 'H264PPS'
 cpp_struct = []
 output_list = []
@@ -24,26 +48,9 @@ with open('h264_pps_new.h', 'wt') as f:
     f.writelines('\n'.join(cpp_struct))
 
 for line in cpp_struct:
-    if 'unsigned int' in line:
-        s1 = line.split('unsigned int ')[1].split(';')[0]
-        output_list.append('        ("%s", c_uint32),' % s1)
-    elif 'uint32_t' in line:
-        s1 = line.split('uint32_t ')[1].split(';')[0]
-        output_list.append('        ("%s", c_uint32),' % s1)
-    elif 'uint8_t' in line:
-        s1 = line.split('uint8_t ')[1].split(';')[0]
-        output_list.append('        ("%s", c_uint8),' % s1)
-    elif 'int32_t' in line:
-        s1 = line.split('int32_t ')[1].split(';')[0]
-        output_list.append('        ("%s", c_int32),' % s1)
-    elif 'size_t' in line:
-        s1 = line.split('size_t ')[1].split(';')[0]
-        output_list.append('        ("%s", c_uint64),' % s1)
-    elif 'int' in line:
-        s1 = line.split('int ')[1].split(';')[0]
-        output_list.append('        ("%s", c_int32),' % s1)
-    else:
-        pass
+    vtype, vname = get_type_name(line)
+    if vtype != None and vname != None:
+        output_list.append('        ("%s", %s),' % (vname, vtype))
 
 output_list.append('    ]\n')
 
