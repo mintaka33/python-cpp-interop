@@ -1,0 +1,8 @@
+
+sudo apt update
+sudo apt install dwarves
+
+g++ -O0 -g test.cpp -o test
+
+pahole test >layout.txt
+

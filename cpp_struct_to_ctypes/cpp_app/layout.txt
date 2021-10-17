@@ -1,0 +1,14 @@
+struct _MyStruct {
+	int                        a;                    /*     0     4 */
+	char                       b;                    /*     4     1 */
+
+	/* XXX 3 bytes hole, try to pack */
+
+	float                      c;                    /*     8     4 */
+	MyEnum                     d;                    /*    12     4 */
+	MyEnum                     e;                    /*    16     4 */
+
+	/* size: 20, cachelines: 1, members: 5 */
+	/* sum members: 17, holes: 1, sum holes: 3 */
+	/* last cacheline: 20 bytes */
+};
