@@ -1,4 +1,5 @@
 import os
+import sys
 
 def parse_array_name(name):
     dim = []
@@ -81,7 +82,7 @@ def find_struct(header_file):
             i += 1
 
 def gen_ctypes(var_name, var_fileds):
-    print('#'*32, var_name)
+    print('#'*8, var_name)
     ctypes_out.append('class %s(PStruct):' % var_name)
     ctypes_out.append('    _fields_ = [')
     for line in var_fileds:
@@ -96,7 +97,7 @@ def gen_ctypes(var_name, var_fileds):
                 ctypes_out.append('        ("%s", %s),' % (vname, type_str))
     ctypes_out.append('    ]\n')
 
-def execute(header_file):
+def parse_and_gen(header_file):
     # find all cpp struct definitions in header file
     find_struct(header_file)
 
@@ -109,8 +110,14 @@ def execute(header_file):
     with open(outfile, 'wt') as f:
         f.writelines('\n'.join(ctypes_out))
 
-header_file = '../../VBParserDef.h'
-struct_dict, ctypes_out = {}, ['from pstruct import *\n']
-execute(header_file)
+if __name__ == '__main__':
+    struct_dict, ctypes_out = {}, ['from pstruct import *\n']
+
+    header_file = 'VBParserDef.h'
+    if len(sys.argv) > 1:
+        header_file = sys.argv[1]
+
+    print('start to process %s ...' % header_file)
+    parse_and_gen(header_file)
 
 print('done')
